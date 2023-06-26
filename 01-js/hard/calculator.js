@@ -17,6 +17,57 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+    constructor() {
+        this.result = 0;
+    }
+
+    add(number) {
+        this.result += number;
+    }
+
+    subtract(number) {
+        this.result -= number;
+    }
+
+    multiply(number) {
+        this.result *= number;
+    }
+
+    divide(number) {
+        if (number === 0) {
+            throw new Error("Division by zero is not allowed");
+        } else {
+            this.result = this.result / number;
+        }
+    }
+
+
+    clear() {
+        this.result = 0;
+    }
+
+    getResult() {
+        return this.result;
+    }
+
+    calculate(expression) {
+        try {
+            // Remove all continuous spaces from the expression
+            expression = expression.replace(/\s+/g, '');
+
+            if (expression.includes('/0')) {
+                throw new Error('Division by zero is not allowed'); //see the comment in the catch statement.
+            }
+
+            this.result = eval(expression);
+            return this.result;
+        } catch (error) {
+            throw new Error(`Invalid expression: ${expression}`);   // this will be exicuted if we get /0
+        }
+    }
+}
+var calc = new Calculator();
+console.log(calc.calculate('1/0'));
 
 module.exports = Calculator;
